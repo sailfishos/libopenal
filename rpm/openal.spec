@@ -8,6 +8,7 @@ License: LGPLv2+ and BSD-3-Clause
 BuildRequires: cmake
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(sndfile)
 BuildRequires: SDL2_sound-devel
 
 
@@ -49,7 +50,12 @@ audio capture.
 
 %build
 pushd build
-%cmake ..
+%cmake .. \
+    -DALSOFT_REQUIRE_PULSEAUDIO=ON \
+    -DALSOFT_BACKEND_ALSA=OFF \
+    -DALSOFT_BACKEND_OSS=OFF \
+    -DALSOFT_BACKEND_SDL2=OFF \
+    -DALSOFT_EXAMPLES=ON
 %make_build
 popd
 
