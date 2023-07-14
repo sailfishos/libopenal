@@ -1,6 +1,6 @@
 Summary: OpenAL Soft
 Name: OpenAL
-Version: 1.22.2
+Version: 1.23.1
 Release: 1
 Source: %{name}-%{version}.tar.bz2
 URL: https://www.openal-soft.org/
