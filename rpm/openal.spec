@@ -1,9 +1,9 @@
 Summary: OpenAL Soft
 Name: OpenAL
-Version: 1.23.1
+Version: 1.24.3
 Release: 1
 Source: %{name}-%{version}.tar.bz2
-URL: https://www.openal-soft.org/
+URL: https://github.com/sailfishos/libopenal
 License: LGPLv2+ and BSD-3-Clause
 BuildRequires: cmake
 BuildRequires: pkgconfig(libpulse)
@@ -49,27 +49,23 @@ audio capture.
 %autosetup -n %{name}-%{version}/upstream
 
 %build
-pushd build
-%cmake .. \
+%cmake \
     -DALSOFT_REQUIRE_PULSEAUDIO=ON \
     -DALSOFT_BACKEND_ALSA=OFF \
     -DALSOFT_BACKEND_OSS=OFF \
     -DALSOFT_BACKEND_SDL2=OFF \
+    -DALSOFT_NO_CONFIG_UTIL=ON \
     -DALSOFT_EXAMPLES=ON
-%make_build
-popd
+%cmake_build
 
 %install
-pushd build
-%make_install
-popd
+%cmake_install
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %license COPYING BSD-3Clause
 %doc README.md docs/env-vars.txt docs/hrtf.txt
 %{_bindir}/openal-info
@@ -77,12 +73,10 @@ popd
 %{_datadir}/openal/*
 
 %files devel
-%defattr(-,root,root,-)
 %{_libdir}/lib*.so
 %{_includedir}/*/*.h
 %{_libdir}/pkgconfig/*
 %{_libdir}/cmake/OpenAL
 
 %files tests
-%defattr(-,root,root,-)
 %{_bindir}/al*
